@@ -5,8 +5,8 @@ from flask import Flask,jsonify,render_template,request
 
 app = Flask(__name__)
 
-#client = pymongo.MongoClient("mongodb://admin:BYTitv62935@10.100.2.123:27017")
-client = pymongo.MongoClient("mongodb://admin:BYTitv62935@node9146-advweb-08.app.ruk-com.cloud:11155")
+client = pymongo.MongoClient("mongodb://admin:BYTitv62935@10.100.2.123:27017")
+#client = pymongo.MongoClient("mongodb://admin:BYTitv62935@node9146-advweb-08.app.ruk-com.cloud:11155")
 
 db = client["Member"]
 
@@ -89,4 +89,4 @@ def delete_Employees(name):
     return jsonify(output)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',port = 5000)
+    app.run(host='0.0.0.0',port = 80)
