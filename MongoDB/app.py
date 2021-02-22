@@ -10,7 +10,7 @@ client = pymongo.MongoClient("mongodb://admin:BYTitv62935@10.100.2.123:27017")
 
 db = client["Member"]
 
-################# index ###############
+################# Index ###############
 @app.route("/")
 def index():
     texts = "Hello World , Welcome to MongoDB , By Weeraprawat"
@@ -21,7 +21,6 @@ def index():
 def get_allEmployees():
     char = db.Employees
     output = char.find()
-    
     return json_util.dumps(output)
 
 # ###################### GET ONE ############################
@@ -73,7 +72,6 @@ def update_Employees(name):
     output = {'Name' : name, 'Title' : title,
                         'Team' : team,
                         'Salary' : salary}
-
     return jsonify(output)
 
 # ##################### DELETE ############################ 
@@ -83,10 +81,8 @@ def delete_Employees(name):
     x = char.find_one({'Name' : name})
 
     char_id = char.delete_one(x)
-
     output = "Deleted complete"
-
     return jsonify(output)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',port = 81)
+    app.run(host='0.0.0.0',port = 80)
