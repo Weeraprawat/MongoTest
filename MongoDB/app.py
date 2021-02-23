@@ -23,12 +23,43 @@ def get_allEmployees():
     output = char.find()
     return json_util.dumps(output)
 
+
+@app.route("/test", methods=['GET'])
+def get_Join():
+    em = db.Employees
+    E = em.aggregate( [     
+            {
+                "$lookup":  {
+                        "from" : "Branch",
+                        "localField": "Code",
+                        "foreignField":"Code" ,
+                        "as": "Branch"
+                }
+            },
+            {"$unwind": "$Branch"},
+            {
+                "$project":{
+                    "Name":1,
+                    "Title":1,
+                    "Location": "$Branch.Location","Province": "$Branch.Province"
+                }
+            }
+        ]  
+    )  
+    return json_util.dumps(E)
+
 # ###################### GET ONE ############################
 @app.route("/Employees/<name>", methods=['GET'])
 def get_oneEmployees(name):
     char = db.Employees
-    x = char.find_one({'name' : name})
-    return json_util.dumps(output)
+    x = char.find_one({'Name' : name})
+    if x:
+        output = {'Name' : x['Name'],'Title' : x['Title'],
+                        'Team' : x['Team'],
+                        'Salary' : x['Salary']}
+    else:
+        output = "No such name"
+    return jsonify(output)
 
 # ######################### INSERT ####################
 @app.route('/Employees', methods=['POST'])
